@@ -23,9 +23,10 @@ from django.urls import path,include
 from Bakery import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('customers/', include('Customers.urls')),
-    path('', include('Bakery.urls')),
-    path('bakery/', include('Bakery.urls')),
+    # path('customers/', include('Customers.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('admin-api/', include('Bakery.urls')),
+    path('customer-api/', include('Bakery.urls')),
     # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
