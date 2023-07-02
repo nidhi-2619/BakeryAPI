@@ -23,7 +23,8 @@ from django.urls import path,include
 from Bakery import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('customers/', include('Customers.urls')),
+    path('customers/', include('Customers.urls')),
+    path('', include('Bakery.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('admin-api/', include('Bakery.urls')),
     path('customer-api/', include('Bakery.urls')),

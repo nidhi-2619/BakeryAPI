@@ -1,8 +1,12 @@
-# from django.urls import path
-# from .views import CustomerRegistrationAPIView,PlaceOrderAPIView, OrderHistoryAPIView
-#
-# urlpatterns = [
-#     path('customers/register/', CustomerRegistrationAPIView.as_view(), name='customer-register'),
-#     path('orders/place/', PlaceOrderAPIView.as_view(), name='place-order'),
-#     path('orders/history/', OrderHistoryAPIView.as_view(), name='order-history'),
-# ]
+from django.urls import path, include
+from .views import UserRegisterViewSet, UserLoginViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('register', UserRegisterViewSet, basename='register')
+router.register('login', UserLoginViewSet, basename='login')
+
+urlpatterns = [
+    path('', include(router.urls)),
+
+]

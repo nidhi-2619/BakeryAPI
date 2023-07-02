@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Bakery',
     'rest_framework',
-
+    'Customers',
     # 'rest_framework_simplejwt',
 ]
 
