@@ -1,6 +1,5 @@
 Django~=4.2.2
 mysqlclient~=2.2.0
-rest_framework=3.14.0
 djangorestframework~=3.14.0
 python-decouple~=3.8.0
 djangorestframework-simplejwt~=5.2.2
