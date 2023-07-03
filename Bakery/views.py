@@ -20,7 +20,7 @@ class BakeryItemViewSet(viewsets.ModelViewSet):
 class ProductListViewSet(viewsets.ModelViewSet):
     """View for creating a new product."""
 
-    queryset = Product.objects.get_queryset()
+    queryset = Product.objects.all()
     serializer_class = ProductListSerializer
 
 class ProductSearchViewSet(viewsets.ModelViewSet):
