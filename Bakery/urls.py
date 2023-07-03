@@ -1,6 +1,8 @@
 from django.urls import path, include
 from .views import IngredientViewSet,BakeryItemViewSet,ProductListViewSet,OrderViewSet,OrderHistoryViewSet,ProductSearchViewSet
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
+
 
 router = DefaultRouter()
 router.register('ingredients', IngredientViewSet, basename='ingredients')
@@ -14,6 +16,7 @@ router.register('search', ProductSearchViewSet, basename='search')
 
 urlpatterns = [
     path('', include(router.urls)),
+
     path('/orders/<int:pk>', OrderViewSet.as_view({'get': 'retrieve'}), name='order-detail'),
     path('/order-history/<int:pk>', OrderHistoryViewSet.as_view({'get': 'retrieve'}), name='order-history-detail'),
 

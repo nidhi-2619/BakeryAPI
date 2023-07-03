@@ -4,4 +4,3 @@
 # admin.site.register(Product)
 # admin.site.register(Order)
 # admin.site.register(OrderItem)
-

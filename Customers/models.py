@@ -20,3 +20,5 @@ class UserLogin(models.Model):
         return f'{self.email} - {self.password}'
 
 
+
+

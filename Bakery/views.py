@@ -5,6 +5,7 @@ from .models import Ingredient, BakeryItem, BakeryItemIngredient, Product, Order
 from .serializers import IngredientSerializer, BakeryItemSerializer, ProductListSerializer, OrderSerializer, OrderItemSerializer, ProductSearchSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+
 # Create your views here.
 class IngredientViewSet(viewsets.ModelViewSet):
     """View for creating a new ingredient."""
@@ -25,6 +26,7 @@ class ProductListViewSet(viewsets.ModelViewSet):
 
 class ProductSearchViewSet(viewsets.ModelViewSet):
     """View for searching a product."""
+    permission_classes = [IsAuthenticated]
     def get(self, request, format=None, **kwargs):
         queryset = Product.objects.all()
         serializer = ProductSearchSerializer(queryset, many=True)
@@ -38,7 +40,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 class OrderHistoryViewSet(viewsets.ModelViewSet):
     """View for viewing order history."""
     permission_classes = [IsAuthenticated]
-    def list(self, request):
+    def get(self, request):
         queryset = Order.objects.filter(customer=request.user)
         serializer = OrderSerializer(queryset, many=True)
         return Response(serializer.data)

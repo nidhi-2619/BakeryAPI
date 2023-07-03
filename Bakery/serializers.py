@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from .models import Ingredient, BakeryItem, BakeryItemIngredient, Product
-from rest_framework import serializers
-from .models import Order, OrderItem
+from .models import Ingredient, BakeryItem, BakeryItemIngredient, Product,Order, OrderItem
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
