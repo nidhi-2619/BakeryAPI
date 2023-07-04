@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     # Added apps
     'Bakery',
     'rest_framework',
-    'rest_framework.authtoken',
+    'django_filters',
+    # 'rest_framework.authtoken',
+    # 'rest_framework_simplejwt',
     'Customers',
 ]
 
@@ -136,7 +138,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ],
+ 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+

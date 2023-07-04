@@ -1,51 +1,52 @@
 from rest_framework import serializers
-from .models import Ingredient, BakeryItem, BakeryItemIngredient, Product,Order, OrderItem
+from .models import Ingredient, BakeryItem, BakeryItemDetails, Product, OrderItem
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ['id', 'product', 'quantity']
 
-class OrderSerializer(serializers.ModelSerializer):
+
+class PlaceOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 
     class Meta:
-        model = Order
-        fields = ['id', 'customer', 'items']
+        model = OrderItem
+        fields = ['items', 'quantity']
+class OrderHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'product', 'quantity']
 
-    def create(self, validated_data):
-        items_data = validated_data.pop('items')
-        order = Order.objects.create(**validated_data)
-        for item_data in items_data:
-            OrderItem.objects.create(order=order, **item_data)
-        return order
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = '__all__'
 
-class BakeryItemIngredientSerializer(serializers.ModelSerializer):
-    ingredient = IngredientSerializer()
-
+class BakeryItemDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BakeryItemIngredient
-        fields = ('ingredient', 'quantity_percentage')
+        model = BakeryItemDetails
+        fields = '__all__'
 
 class BakeryItemSerializer(serializers.ModelSerializer):
-    ingredients = BakeryItemIngredientSerializer(many=True)
-
     class Meta:
         model = BakeryItem
         fields = '__all__'
 
-
 class ProductListSerializer(serializers.ModelSerializer):
+    # def post(self):
+    #     user = self.context['request'].user
+    #     product = Product.objects.create(user=user, **self.validated_data)
+
     class Meta:
         model = Product
         fields = ['name','price']
 
 class ProductSearchSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Product
-        fields = ['name','price']
+        fields = ['name','price','category']
+
+
