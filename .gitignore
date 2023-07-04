@@ -146,6 +146,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+./Bakery/__pycache__
+./Bakery/migrations/__pycache__
+./BakeryAPI/__pycache__
+./Customers/__pycache__
+./Customers/migrations/__pycache__
 
 # pytype static type analyzer
 .pytype/
