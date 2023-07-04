@@ -45,6 +45,8 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'name', 'price',]
 
     def post(self, request, format=None):
         serializer = ProductListSerializer(data=request.data)
@@ -80,7 +82,10 @@ class OrderHistoryViewSet(viewsets.ModelViewSet):
     for the currently authenticated user.
     """
     # permission_classes = [IsAuthenticated]
-
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderHistorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name']
     def get_queryset(self, request):
         queryset = OrderItem.objects.filter(customer=request.user)
         serializer = OrderHistorySerializer(queryset, many=True)
@@ -92,8 +97,6 @@ class PlaceOrderViewSet(viewsets.ModelViewSet):
     # permission_classes = [IsAuthenticated]
     queryset = OrderItem.objects.all()
     serializer_class = PlaceOrderSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category', 'name', 'price', 'ingredients']
 
     def create(self, request):
         items_data = request.data.pop('items')
