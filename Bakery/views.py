@@ -46,7 +46,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category', 'name', 'price',]
+    filterset_fields = ['name', 'price',]
 
     def post(self, request, format=None):
         serializer = ProductListSerializer(data=request.data)
@@ -62,7 +62,7 @@ class ProductSearchViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSearchSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = [ 'name', 'price', 'ingredients']
+    search_fields = ['name', 'price', 'ingredients']
 
     def get(self, request, format=None, **kwargs):
         queryset = Product.objects.all()
