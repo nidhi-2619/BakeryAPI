@@ -1,14 +1,9 @@
-from rest_framework import viewsets
-from .models import UserRegister, UserLogin
-from .serializers import UserRegisterSerializer, UserLoginSerializer
-from django.contrib.auth.models import User
-from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from .serializers import RegisterSerializer
+from django.contrib.auth import get_user_model
+from rest_framework import generics
 
-class UserRegisterViewSet(viewsets.ModelViewSet):
-    queryset = UserRegister.objects.all()
-    serializer_class = UserRegisterSerializer
-
-class UserLoginViewSet(viewsets.ViewSet):
-    queryset = UserLogin.objects.all()
-    serializer_class = UserLoginSerializer
-
+class RegisterView(generics.CreateAPIView):
+    queryset = get_user_model().objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
