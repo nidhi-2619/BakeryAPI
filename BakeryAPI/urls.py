@@ -26,9 +26,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/customers/', include('Customers.urls')),
     path('', include('Bakery.urls')),
-    # path('api/', include('Bakery.urls'))]
+    path('api/', include('Bakery.urls')),
     # path('api-auth/', include('rest_framework.urls')),
-#     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-#     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-#     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
 ]
