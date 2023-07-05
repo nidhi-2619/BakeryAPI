@@ -70,5 +70,5 @@ class OrderItem(models.Model):
     order_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'{self.order} - {self.product} - {self.quantity}'
+        return f'{self.order} - {self.product} - {self.quantity} - {self.order_date}'
 
