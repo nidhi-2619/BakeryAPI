@@ -1,16 +1,15 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, status,filters
 from rest_framework.response import Response
 from .models import Ingredient, BakeryItem, BakeryItemDetails, Product, OrderItem
 from .serializers import (
     IngredientSerializer, BakeryItemSerializer, ProductListSerializer, PlaceOrderSerializer,
     OrderItemSerializer, ProductSearchSerializer, OrderHistorySerializer)
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
-
+from rest_framework.exceptions import ValidationError
 
 # Create your views here.
 class IngredientViewSet(viewsets.ModelViewSet):
@@ -25,7 +24,9 @@ class IngredientViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
-
+@api_view(['POST'])
+class InventoryCheck(viewsets.ModelViewSet):
+    """View for checking inventory."""
 
 class BakeryItemViewSet(viewsets.ModelViewSet):
     """View for creating a new bakery item."""
@@ -58,7 +59,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ProductSearchViewSet(viewsets.ModelViewSet):
     """View for searching a product."""
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductSearchSerializer
     filter_backends = [filters.SearchFilter]
@@ -81,7 +82,7 @@ class OrderHistoryViewSet(viewsets.ModelViewSet):
     This view should return a list of all the purchases
     for the currently authenticated user.
     """
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     queryset = OrderItem.objects.all()
     serializer_class = OrderHistorySerializer
     filter_backends = [DjangoFilterBackend]
@@ -92,15 +93,19 @@ class OrderHistoryViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+
+#
 class PlaceOrderViewSet(viewsets.ModelViewSet):
-    """View for placing a new order."""
-    # permission_classes = [IsAuthenticated]
+    """View for placing an order."""
+    permission_classes = [IsAuthenticated]
     queryset = OrderItem.objects.all()
     serializer_class = PlaceOrderSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name']
 
-    def create(self, request):
-        items_data = request.data.pop('items')
-        order = OrderItem.objects.create(customer=request.user)
-        for item_data in items_data:
-            OrderItem.objects.create(order=order, **item_data)
-        return Response("Order Placed Successfully")
+    def post(self, request, format=None):
+        serializer = PlaceOrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)

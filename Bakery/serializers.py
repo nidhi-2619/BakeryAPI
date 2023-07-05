@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Ingredient, BakeryItem, BakeryItemDetails, Product, OrderItem
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
@@ -35,9 +36,9 @@ class BakeryItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProductListSerializer(serializers.ModelSerializer):
-    # def post(self):
-    #     user = self.context['request'].user
-    #     product = Product.objects.create(user=user, **self.validated_data)
+    def post(self):
+        user = self.context['request'].user
+        product = Product.objects.create(user=user, **self.validated_data)
 
     class Meta:
         model = Product
