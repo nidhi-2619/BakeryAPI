@@ -1,7 +1,16 @@
  ## Bakery API 
- This Django REST API provides endpoints to manage a fictional bakery's inventory and bakery items.
- Customers can view and search bakery products and can order products after being authentication.
- 
+ This is a Django REST API for the bakery.
+
+### Features:
+
+- User can place order, view order details and generate bill for the order.
+- Admin can add ingredients, add bakery items and view bakery item details and manage inventory.
+- Unauthorized users can view the list of available bakery products, but cannot place order.
+- Unauthorized users can register as a customer and obtain a JWT token for authentication.
+- Customer can filter the product search .
+
+
+
 ### Clone the Repo
 ```
 git clone https://github.com/nidhi-2619/bakery-api.git
@@ -33,14 +42,19 @@ python manage.py migrate
 ```
 
 ### Create Superuser
+
+To create a superuser account, use this command:
+
 ```
 python manage.py createsuperuser
 ```
 
 ### Start the development Server
+
 ```
 python manage.py runserver
 ```
+Server will be available at` http://127.0.0.1:8000 `in your browser
 
 ### API Endpoints
 ##### Admin Endpoints
