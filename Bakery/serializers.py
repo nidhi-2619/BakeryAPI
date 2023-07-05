@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Ingredient, BakeryItem, BakeryItemDetails, Product, OrderItem
+from django.contrib.auth import get_user_model
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -49,5 +50,6 @@ class ProductSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['name','price']
+
 
 

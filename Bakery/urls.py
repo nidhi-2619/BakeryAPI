@@ -14,7 +14,6 @@ router.register('search', ProductSearchViewSet, basename='search')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls')),
     path('order-history/<int:pk>', OrderHistoryViewSet.as_view({'get': 'retrieve'}), name='order-history-detail'),
 
 ]
