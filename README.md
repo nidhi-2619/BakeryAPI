@@ -16,7 +16,7 @@
 
 ### Clone the Repo
 ```
-git clone https://github.com/nidhi-2619/bakery-api.git
+git clone https://github.com/nidhi-2619/BakeryAPI.git
 ```
 
 ### Install Dependencies
