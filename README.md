@@ -17,7 +17,6 @@
 ```
 git clone https://github.com/nidhi-2619/BakeryAPI.git
 ```
-
 ### Install Dependencies
 ```
 pip install -r requirements.txt
