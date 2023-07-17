@@ -1,4 +1,7 @@
- ## Bakery API 
+##### NOTE :
+`This branch is on feature freeze for evaluation ,refer to dev branch for latest changes`
+
+## Bakery API 
  This is a Django REST API for the bakery.
 
 ### Features:
