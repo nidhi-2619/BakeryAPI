@@ -10,7 +10,6 @@
 - Customer can filter the product search .
 
 
-
 ### Clone the Repo
 ```
 git clone https://github.com/nidhi-2619/BakeryAPI.git
