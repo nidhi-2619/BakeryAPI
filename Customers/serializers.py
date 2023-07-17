@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import get_user_model, password_validation
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 User = get_user_model()
 
@@ -45,4 +46,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+    
+class UserLoginSerializer(serializers.ModelSerializer):
+    """Serializer for User Login"""
+    username = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', AccessToken, RefreshToken)
+
 
