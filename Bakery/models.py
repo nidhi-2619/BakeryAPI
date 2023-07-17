@@ -25,7 +25,9 @@ class BakeryItem(models.Model):
     """Model representing a bakery item."""
 
     name = models.CharField(max_length=100)
-    ingredients = models.ManyToManyField(Ingredient,through='BakeryItemDetails')
+    ingredients = models.ManyToManyField(Ingredient)
+    cost_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    selling_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
     def __str__(self):
         return self.name
@@ -41,16 +43,14 @@ class InventoryBakeryItem(models.Model):
         return f'{self.bakery_item} - {self.quantity}'
 
 
-class BakeryItemDetails(models.Model):
-    """Model representing the ingredients used in a bakery item."""
-    bakery_item = models.ForeignKey(BakeryItem, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,related_name='ingredient')
-    cost_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    selling_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-
-    def __str__(self):
-        return f'Item Name: {self.bakery_item} |  Ingredients (%): {self.ingredient} | Cost Price: {self.cost_price} | Selling Price: {self.selling_price}'
-
+# class BakeryItemDetails(models.Model):
+#     """Model representing the ingredients used in a bakery item."""
+#     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,default=None)
+#
+#
+#     def __str__(self):
+#         return f'Item Name: {self.bakery_item} |  Ingredients (%): {self.ingredient} | Cost Price: {self.cost_price} | Selling Price: {self.selling_price}'
+#
 
 class Product(models.Model):
     """Model representing a product available in bakery."""

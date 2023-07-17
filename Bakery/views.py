@@ -1,20 +1,21 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status,filters
 from rest_framework.response import Response
-from .models import Ingredient, BakeryItem, BakeryItemDetails, Product, OrderItem
+from .models import Ingredient, BakeryItem, Product, OrderItem
 from .serializers import (
     IngredientSerializer, BakeryItemSerializer, ProductListSerializer, PlaceOrderSerializer,
-    OrderItemSerializer, ProductSearchSerializer, OrderHistorySerializer, BakeryItemDetailsSerializer
+    OrderItemSerializer, ProductSearchSerializer, OrderHistorySerializer
 
 )
 
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 
 # Create your views here.
+
+
 class IngredientViewSet(viewsets.ModelViewSet):
     """View for creating a new ingredient."""
     queryset = Ingredient.objects.all()
@@ -41,9 +42,6 @@ class InventoryViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=400)
 
 
-
-
-
 class BakeryItemViewSet(viewsets.ModelViewSet):
     """View for creating a new bakery item."""
     queryset = BakeryItem.objects.all()
@@ -59,7 +57,7 @@ class BakeryItemViewSet(viewsets.ModelViewSet):
 
 class ProductViewSet(viewsets.ModelViewSet):
     """View for creating a new product."""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
 
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
@@ -76,7 +74,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ProductSearchViewSet(viewsets.ModelViewSet):
     """View for searching a product."""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     queryset = Product.objects.all()
     serializer_class = ProductSearchSerializer
     filter_backends = [filters.SearchFilter]
