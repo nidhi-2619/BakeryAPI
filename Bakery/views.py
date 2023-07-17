@@ -21,7 +21,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = IngredientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -34,7 +34,7 @@ class InventoryViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = IngredientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -47,7 +47,7 @@ class BakeryItemViewSet(viewsets.ModelViewSet):
     queryset = BakeryItem.objects.all()
     serializer_class = BakeryItemSerializer
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = BakeryItemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -64,7 +64,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name', 'price',]
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = ProductListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -80,7 +80,7 @@ class ProductSearchViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'price', 'ingredients']
 
-    def get(self, request, format=None, **kwargs):
+    def list(self, request, format=None, **kwargs):
         queryset = Product.objects.all()
         serializer = ProductSearchSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -103,7 +103,7 @@ class OrderHistoryViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name']
 
-    def get_queryset(self, request):
+    def list(self, request):
         queryset = OrderItem.objects.filter(customer=request.user)
         serializer = OrderHistorySerializer(queryset, many=True)
         return Response(serializer.data)
@@ -118,7 +118,7 @@ class PlaceOrderViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name']
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = PlaceOrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
