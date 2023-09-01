@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Ingredient, BakeryItem, BakeryItemDetails, Product, OrderItem
+from .models import Ingredient, BakeryItem,Product, OrderItem
 from django.contrib.auth import get_user_model
 
 
@@ -26,10 +26,6 @@ class IngredientSerializer(serializers.ModelSerializer):
         model = Ingredient
         fields = '__all__'
 
-class BakeryItemDetailsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BakeryItemDetails
-        fields = '__all__'
 
 class BakeryItemSerializer(serializers.ModelSerializer):
     class Meta:

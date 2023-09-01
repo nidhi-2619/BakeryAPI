@@ -12,7 +12,24 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import requests
+import json
+
+
+SIMPLE_JWT = {
+    'JWT_VERIFY': True,
+    'JWT_PAYLOAD_HANDLER': 'account.utils.jwt_payload_handler',
+    'JWT_GET_USER_SECRET_KEY': "account.models.get_jwt_secret",
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA':timedelta(days=2),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA':timedelta(days=7),
+}
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -180,6 +197,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
+
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -188,4 +206,5 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend'
     ]
 }
+
 

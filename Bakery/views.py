@@ -1,26 +1,27 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status,filters
 from rest_framework.response import Response
-from .models import Ingredient, BakeryItem, BakeryItemDetails, Product, OrderItem
+from .models import Ingredient, BakeryItem, Product, OrderItem
 from .serializers import (
     IngredientSerializer, BakeryItemSerializer, ProductListSerializer, PlaceOrderSerializer,
-    OrderItemSerializer, ProductSearchSerializer, OrderHistorySerializer, BakeryItemDetailsSerializer
+    OrderItemSerializer, ProductSearchSerializer, OrderHistorySerializer
 
 )
 
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
 
 # Create your views here.
+
+
 class IngredientViewSet(viewsets.ModelViewSet):
     """View for creating a new ingredient."""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = IngredientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -33,7 +34,7 @@ class InventoryViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = IngredientSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -41,15 +42,12 @@ class InventoryViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=400)
 
 
-
-
-
 class BakeryItemViewSet(viewsets.ModelViewSet):
     """View for creating a new bakery item."""
     queryset = BakeryItem.objects.all()
     serializer_class = BakeryItemSerializer
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = BakeryItemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -59,14 +57,14 @@ class BakeryItemViewSet(viewsets.ModelViewSet):
 
 class ProductViewSet(viewsets.ModelViewSet):
     """View for creating a new product."""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
 
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name', 'price',]
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = ProductListSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -76,13 +74,13 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ProductSearchViewSet(viewsets.ModelViewSet):
     """View for searching a product."""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     queryset = Product.objects.all()
     serializer_class = ProductSearchSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'price', 'ingredients']
 
-    def get(self, request, format=None, **kwargs):
+    def list(self, request, format=None, **kwargs):
         queryset = Product.objects.all()
         serializer = ProductSearchSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -105,7 +103,7 @@ class OrderHistoryViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name']
 
-    def get_queryset(self, request):
+    def list(self, request):
         queryset = OrderItem.objects.filter(customer=request.user)
         serializer = OrderHistorySerializer(queryset, many=True)
         return Response(serializer.data)
@@ -120,7 +118,7 @@ class PlaceOrderViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['name']
 
-    def post(self, request, format=None):
+    def create(self, request, format=None):
         serializer = PlaceOrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
